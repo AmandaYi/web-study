@@ -1,0 +1,10 @@
+body {
+        background-image: url("./../images/1.png");
+        background-size: 100%;
+        background-position: center;
+}
+
+#title {
+        color: #f00;
+        background-color: #ff0;
+}
