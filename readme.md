@@ -1,3 +1,4 @@
 # 学习中的一些笔记
-- [-] ts
+- [x] ts
 - [x] webpack
+- [x] react
