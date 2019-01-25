@@ -9,15 +9,26 @@ module.exports = {
         publicPath: "temp/"
     },
     module: {
-        rules: [{
-            test: /\.js$/,
-            exclude : /node_modules/,
-            loader: "babel-loader",
-            // options: {
-            //     presets: ["env", ]
-            // }
+        rules: [
 
-        }]
+            {
+                test: /\.css$/,
+                use: [{
+                    loader: "style-loader"
+                },
+                {
+                    loader: "css-loader"
+                }]
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: "babel-loader",
+                // options: {
+                //     presets: ["env", ]
+                // }
+
+            }]
     },
     devServer: {
         contentBase: "./",
