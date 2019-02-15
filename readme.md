@@ -2,3 +2,5 @@
 - [x] ts
 - [x] webpack
 - [x] react
+- [x] koa2
+- [x] es6
