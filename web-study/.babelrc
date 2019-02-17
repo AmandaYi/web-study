@@ -1,0 +1,16 @@
+{
+    "presets": [
+        [
+            "env",
+            {
+                "targets": {
+                    "chrome": 52,
+                    "browers": [
+                        ">0.25%",
+                        "last 2 vesions",
+                    ]
+                }
+            }
+        ]
+    ]
+}
