@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>a.html</title>
+</head>
+
+<body>
+    <script>
+        window.onload = function () {
+            window.addEventListener("message", (event) => {
+                console.log(event);
+                document.write(`接收到了服务4000发来的内容${event}`)
+            })
+        }
+    </script>
+</body>
+
+</html>
