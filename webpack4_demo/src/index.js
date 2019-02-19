@@ -1,1 +1,4 @@
-document.getElementById("title").innerHTML= "Hello webpack4!";
+window.onload = function () {
+    let title = document.getElementById("title")
+    title.innerHTML="Hello webpack4!"
+}
