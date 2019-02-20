@@ -19,7 +19,36 @@ const process = require("process")
 console.log(encodeURIComponent(process.env.NODE_ENV))
 let mode = process.env.NODE_ENV ? process.env.NODE_ENV : "development"
 
+// 引入webpack
+const webpack = require("webpack")
+// 引入自动加载模块,而不是到处import或者require
+const ProvidePlugin = webpack.ProvidePlugin;
+ 
 module.exports = {
+    optimization: {
+        splitChunks: {
+          chunks: 'async',
+          minSize: 30000,
+          maxSize: 0,
+          minChunks: 1,
+          maxAsyncRequests: 5,
+          maxInitialRequests: 3,
+          automaticNameDelimiter: '~',
+          name: true,
+          cacheGroups: {
+            vendors: {
+              test: /[\\/]node_modules[\\/]/,
+              priority: -10
+            },
+            default: {
+              minChunks: 2,
+              priority: -20,
+              reuseExistingChunk: true
+            }
+          }
+        }
+      },
+     
     // 这里使用了ES6语法,这里是环境构建模式
     mode,
     // 打开监听模式。这意味着在初始构建之后，webpack将继续监视任何已解析文件的更改。
@@ -34,12 +63,16 @@ module.exports = {
         // 排除不监听的文件夹,也可以这样子 ignored: ['files/**/*.js', 'node_modules']
         ignored: /node_modules/
     },
+
     // 入口
     entry: {
         /* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓  ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
         // 这里新增加了一个入口,并修改了入口的名字也就是index,和 index2
         index: "./src/index.js",
         /* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+        // 引入入口文件,这里直接写文件名,nodejs会自动去找node_modules文件夹下面的包,nodejs基础知识
+        jquery: "jquery",
+        layui: "layui"
     },
     // 出口
     output: {
@@ -173,6 +206,19 @@ module.exports = {
     },
     // 插件,用于生产模板,和各项功能
     plugins: [
+        // 引入自动加载模块的插件
+        new ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
+        }),
+        new CommonsChunkPlugin({
+            // 入口的key值
+            name: ["jquery", "layui"],
+            //最小打包的文件模块数，这里直接写2就好
+            minChunks: 2,
+            //把文件打包到哪里，是一个路径
+            filename: "assets/js/[name].js",
+        }),
         // 初始化JS处理插件
         new UglifyJsPlugin(),
         //配置html处理的插件,其中一个html需要配置一个处理html的插件
@@ -287,7 +333,8 @@ module.exports = {
             paths: glob.sync([
                 path.join(__dirname, "./src/*.html")
             ]),
-        })
+        }),
+
     ],
 
     // 配置webpack开发服务功能
