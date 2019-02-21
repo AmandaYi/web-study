@@ -1,7 +1,9 @@
-// var website = {
-//     publicPath: "http://localhost:3000/"
-// }
+let globleVariable = {
+    publicPath: "http://localhost:3000/"
+}
 const path = require("path")
+// 引入第三方的glob
+const glob = require("glob-all")
 // 引入插件
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 // 引入插件处理html
@@ -10,28 +12,73 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 // 引入分离插件处理CSS分离
 const ExtractTextWebpackPlugin = require("extract-text-webpack-plugin")
 
+// 引入去除没有使用的CSS代码
+const PurifyCSSPlugin = require("purifycss-webpack");
+const process = require("process")
+// 传入的值
+console.log(encodeURIComponent(process.env.NODE_ENV))
+let mode = process.env.NODE_ENV ? process.env.NODE_ENV : "development"
+
+// 引入webpack
+const webpack = require("webpack")
+// 引入自动加载模块,而不是到处import或者require
+const ProvidePlugin = webpack.ProvidePlugin;
+ 
 module.exports = {
-    mode: "production",
+    optimization: {
+        splitChunks: {
+          chunks: 'async',
+          minSize: 30000,
+          maxSize: 0,
+          minChunks: 1,
+          maxAsyncRequests: 5,
+          maxInitialRequests: 3,
+          automaticNameDelimiter: '~',
+          name: true,
+          cacheGroups: {
+            vendors: {
+              test: /[\\/]node_modules[\\/]/,
+              priority: -10
+            },
+            default: {
+              minChunks: 2,
+              priority: -20,
+              reuseExistingChunk: true
+            }
+          }
+        }
+      },
+     
+    // 这里使用了ES6语法,这里是环境构建模式
+    mode,
+    // 打开监听模式。这意味着在初始构建之后，webpack将继续监视任何已解析文件的更改。
+    watch: true,
+    // 配置监听选项
+    watchOptions: {
+        // 第一个文件更改后，在重建之前添加延迟。
+        // 这允许webpack将在此时间段内所做的任何其他更改聚合到一个重建中。传递一个以毫秒为单位的值：
+        aggregateTimeout: 300,
+        //检测修改的时间，以毫秒为单位
+        poll: 1000,
+        // 排除不监听的文件夹,也可以这样子 ignored: ['files/**/*.js', 'node_modules']
+        ignored: /node_modules/
+    },
+
     // 入口
     entry: {
         /* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓  ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
         // 这里新增加了一个入口,并修改了入口的名字也就是index,和 index2
         index: "./src/index.js",
         /* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
+        // 引入入口文件,这里直接写文件名,nodejs会自动去找node_modules文件夹下面的包,nodejs基础知识
+        jquery: "jquery",
+        layui: "layui"
     },
     // 出口
     output: {
-        // 出口的文件夹
         path: path.resolve(__dirname, "./dist/"),
-        // 修改打包文件的名字,
-        // [name] 的意思就是 根据入口文件的名字进行输出打包
-        /* ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓  ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ */
-        // 修改添加的地方添加的地方, 这里修改了一下输出的文件名为入口的key值
         filename: "[name].js",
-        // PS, 强调, 如果这里有publicPath属性,并不会去覆盖掉devServer的属性,因为这是打包的环境
-        /* ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ */
-        // publicPath: website.publicPath
-
+        publicPath: globleVariable.publicPath
     },
 
     // 模块,例如,解读CSS,图片如何转换,压缩
@@ -40,27 +87,30 @@ module.exports = {
             {
                 test: /\.css$/,
                 // use: [
-                //     // {
-                //     //     loader: "style-loader"
-                //     // },
-                //     // {
-                //     //     loader: "css-loader",
-                //     //     options: {
-                //     //         importLoaders: 1
-                //     //     }
-                //     // },
-                //     // {
-                //     //     loader: "postcss-loader",
-                //     // }
+                //     {
+                //         loader: "style-loader"
+                //     },
+                //     {
+                //         loader: "css-loader",
+                //         options: {
+                //             importLoaders: 1
+                //         }
+                //     },
+                //     {
+                //         // 增加一个处理css的postcss-loader
+                //         loader: "postcss-loader",
+                //     }
                 // ]
                 use: ExtractTextWebpackPlugin.extract({
-                    fallback: "style-loader",
                     use: [{
-                        loader:"css-loader",
-                        options:{
-
+                        loader: "css-loader",
+                        options: {
+                            importLoaders: 1
                         }
-                    },]
+                    }, {
+                        loader: "postcss-loader"
+                    }],
+                    fallback: "style-loader",
                 })
             },
             {
@@ -69,7 +119,9 @@ module.exports = {
                 use: [{
                     loader: "babel-loader",
                     options: {
-                        presets: ["@babel/preset-env"]
+                        presets: ["@babel/preset-env"],
+                        // 增加对react的支持
+                        plugins: [require("@babel/plugin-proposal-object-rest-spread")]
                     }
                 }]
             },
@@ -84,7 +136,10 @@ module.exports = {
                             // 2.文件大小大于limit，url-loader会调用file-loader进行处理，参数也会直接传给file-loader。
                             limit: 1024 * 30, //是把小于500000B的文件打成Base64的格式，写入JS。
                             mimetype: "extname", // 指定文件的MIME类型（否则从文件扩展名推断）
-                            fallback: "file-loader" //loader当文件大于限制时（以字节为单位） 指定使用file-loader进行处理
+                            fallback: "file-loader", //loader当文件大于限制时（以字节为单位） 指定使用file-loader进行处理,
+                            // 这里配置一下输出的路径就可以了
+                            outputPath: "images/"
+
                         }
                     }
                 ]
@@ -145,11 +200,25 @@ module.exports = {
                 //         }
                 //     }
                 // ]
-            }
+            },
+
         ]
     },
     // 插件,用于生产模板,和各项功能
     plugins: [
+        // 引入自动加载模块的插件
+        new ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
+        }),
+        new CommonsChunkPlugin({
+            // 入口的key值
+            name: ["jquery", "layui"],
+            //最小打包的文件模块数，这里直接写2就好
+            minChunks: 2,
+            //把文件打包到哪里，是一个路径
+            filename: "assets/js/[name].js",
+        }),
         // 初始化JS处理插件
         new UglifyJsPlugin(),
         //配置html处理的插件,其中一个html需要配置一个处理html的插件
@@ -255,14 +324,24 @@ module.exports = {
         }),
         // 处理css分离出来
         // 这里的/css/index.css是分离后的路径位置。这部配置完成后，包装代码：还要修改原来我们的style-loader和css-loader。
-        new ExtractTextWebpackPlugin("./css/index.css")//
+        new ExtractTextWebpackPlugin("./css/index.css"),
+        // 这个插件自动去除无用的css样式, 必须要在css样式插件extract-text-webpack-plugin分离的后面使用,
+        // 否则的话,会自动删除很多有用的css
+        new PurifyCSSPlugin({
+            // 配置了一个paths，主要是需找html模板，purifycss根据这个配置会遍历你的文件，查找哪些css被使用了。
+            // 因为这里使用的第三方的glob,所以参数是个数组
+            paths: glob.sync([
+                path.join(__dirname, "./src/*.html")
+            ]),
+        }),
+
     ],
 
     // 配置webpack开发服务功能
     devServer: {
         // 在这里增加了开发服务的功能
         // 设置需要监听的目录
-        contentBase: path.resolve(__dirname, 'dist'),
+        contentBase: path.resolve(__dirname, 'src'),
         //  
         host: "localhost",
         // 设置服务器的端口
@@ -273,7 +352,8 @@ module.exports = {
         // 实时刷新
         inline: true,
         // 新文件的内存路径与配置文件中的publicPath相关，如http://localhost:8080/{publicPath}/bundle.js
-        publicPath: "/dist/"
+        // 这里尽量不要配置,容易找不到路径,使用根目录既可
+        // publicPath: "/src/"
     }
 }
 

@@ -5,26 +5,38 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "webpack-dev-server --open",
-    "build": "webpack"
+    "server": "set NODE_ENV=development&webpack-dev-server --open",
+    "build": "set NODE_ENV=production&webpack",
+    "dev": "set NODE_ENV=development&webpack"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "file-loader": "^3.0.1"
+    "file-loader": "^3.0.1",
+    "jquery": "^3.3.1",
+    "layui": "^0.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.2",
     "@babel/preset-env": "^7.3.1",
+    "autoprefixer": "^9.4.8",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.0",
+    "cssnano": "^4.1.10",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "glob-all": "^3.1.0",
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
+    "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
+    "purify-css": "^1.2.5",
+    "purifycss-webpack": "^0.7.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "uglifyjs-webpack-plugin": "^2.1.1",
