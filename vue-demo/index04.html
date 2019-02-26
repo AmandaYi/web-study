@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>04mixin</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{message}}</p>
+        <input type="text" v-model="message">
+        <book-item :list="bookListArrFromServe" @buy="buy"></book-item>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+        var mixin = {
+            created:function(){
+                console.log("hello world mixin !")
+            }
+        }
+        // 创建一个事件中心
+        let eventBus = new Vue()
+        
+        // 创建一个组件,
+        let bookItem = Vue.component("bookItem", {
+            data() {
+                return {
+                    bookList: [{
+                        name: "js高级编程",
+                        price: "50",
+                    }, {
+                        name: "html5",
+                        price: "10",
+                    }]
+                }
+            },
+            props: {
+                list: Array
+            },
+            template: `
+                <ul>
+                  <li v-for="(item,index) in list" @click="buy(item)">
+                    序号: {{index}} {{item.name}} -> 价格:{{item.price}}
+                </li>
+                </ul>          
+            `,
+      
+            methods: {
+                buy(item) {
+                    // 父子传参
+                    // alert(`${item.name}传递出去了`)
+                    // this.$emit("buy", item.name)
+
+
+                    // 事件注册中心
+                    eventBus.$emit("buyByEvent",item.name)
+                }
+            },
+            mixins:[mixin]
+        })
+        let App = new Vue({
+            el: "#app",
+            data: {
+                message: "",
+                bookListArrFromServe: [
+                    {
+                        name: "js高级与编程艺术",
+                        price: "75"
+                    }]
+            },
+            components: {
+                "book-item": bookItem
+            },
+            created (){
+                // 使用eventBus监听
+
+                eventBus.$on("buyByEvent", function (name){
+                    alert(`通过eventbus得到了${name}`)
+                })
+            },
+            methods: {
+                // 使用父子传参接受参数
+                buy(name) {
+                    alert(`我是拿到的值${name}`)
+                }
+            },
+            mixins:[mixin]
+        })
+
+    </script>
+</body>
+
+</html>
