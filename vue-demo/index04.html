@@ -16,15 +16,16 @@
     </div>
 
     <script src="./js/vue.js"></script>
+    <script src="./js/vue-router.js"></script>
     <script>
         var mixin = {
-            created:function(){
+            created: function () {
                 console.log("hello world mixin !")
             }
         }
         // 创建一个事件中心
         let eventBus = new Vue()
-        
+
         // 创建一个组件,
         let bookItem = Vue.component("bookItem", {
             data() {
@@ -48,7 +49,7 @@
                 </li>
                 </ul>          
             `,
-      
+
             methods: {
                 buy(item) {
                     // 父子传参
@@ -57,12 +58,16 @@
 
 
                     // 事件注册中心
-                    eventBus.$emit("buyByEvent",item.name)
+                    eventBus.$emit("buyByEvent", item.name)
                 }
             },
-            mixins:[mixin]
+            mixins: [mixin]
         })
+        // 创建路由模型
+        let router = new VueRouter();
+
         let App = new Vue({
+           router,
             el: "#app",
             data: {
                 message: "",
@@ -75,10 +80,10 @@
             components: {
                 "book-item": bookItem
             },
-            created (){
+            created() {
                 // 使用eventBus监听
 
-                eventBus.$on("buyByEvent", function (name){
+                eventBus.$on("buyByEvent", function (name) {
                     alert(`通过eventbus得到了${name}`)
                 })
             },
@@ -88,8 +93,9 @@
                     alert(`我是拿到的值${name}`)
                 }
             },
-            mixins:[mixin]
+            mixins: [mixin]
         })
+
 
     </script>
 </body>
