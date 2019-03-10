@@ -7,8 +7,8 @@ if (Hls.isSupported()) {
     hls.loadSource(url);
     hls.attachMedia(video);
     hls.on(Hls.Events.MANIFEST_PARSED, function () {
-
-        video.play();
+console.log("start running this video")
+        // video.play();
     });
 }
 // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
@@ -19,7 +19,7 @@ if (Hls.isSupported()) {
 else if (video.canPlayType('application/vnd.apple.mpegurl')) {
     video.src = url;
     video.addEventListener('loadedmetadata', function () {
-
-        video.play();
+console.log("start running this video")
+        // video.play();
     });
 }
