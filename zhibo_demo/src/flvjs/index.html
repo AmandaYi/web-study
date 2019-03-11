@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>flvjs</title>
+    <script src="./flv.js"></script>
+</head>
+
+<body>
+    <video id="flvVideo" controls></video>
+
+    <!-- 记得先开启go服务器,然后用ffmpeg推流 -->
+    <!-- ffmpeg -re -i D:/project/src/github.com/amandayi/web-study/zhibo_demo/src/testvideo.mp4 -c copy -f flv rtmp://localhost:1935/live/movie -->
+
+    <script>
+        var url =
+            `http://127.0.0.1:7001/live/movie.flv`
+        var video = document.querySelector("#flvVideo")
+
+        if (flvjs.isSupported()) {
+            var flvPlayer = flvjs.createPlayer({
+                type: 'flv',
+                url: url
+            });
+            flvPlayer.attachMediaElement(video);
+            flvPlayer.load();
+            flvPlayer.play();
+        }
+    </script>
+</body>
+
+</html>

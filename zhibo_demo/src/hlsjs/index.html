@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>hlsjs</title>
+    <script src="./hls.js"></script>
+</head>
+
+<body>
+
+    <script>
+        var videoNum = 20;
+        var videoStr = `<video width="300" height="180" class="video" muted controls></video>`
+        // 创建dom元素
+        createDom()
+
+        function createDom() {
+            let v = ""
+            for (let i = 1; i < videoNum; i++) {
+                v += videoStr;
+            }
+            // 追加
+            console.log(v)
+            document.getElementsByTagName("body")[0].innerHTML = v;
+        }
+
+
+        var Hls = window.Hls
+        var videoArr = document.querySelectorAll(".video")
+        console.log(videoArr)
+        let videoLen = videoArr.length
+        var str = "http://video.maotuotuo.com:10080/hls/360/360_live.m3u8"
+        var url = []
+        for (let i = 1; i <= videoLen; i++) {
+            let m = i  
+            url.push(`http://video.maotuotuo.com:10080/hls/${m}/${m}_live.m3u8`)
+        }
+        for (let i = 0; i < videoLen; i++) {
+            initSrc(videoArr[i], url[i])
+        }
+
+
+        function initSrc(thisVideo, url) {
+            var hls = new Hls();
+
+            if (Hls.isSupported()) {
+                hls.loadSource(url)
+                hls.attachMedia(thisVideo)
+                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                    console.log("Events.MANIFEST_PARSED")
+                    thisVideo.play();
+                });
+            } else if (thisVideo.canPlayType('application/vnd.apple.mpegurl')) {
+                thisVideo.src = url;
+                thisVideo.addEventListener('loadedmetadata', function () {
+                    console.log("loadedmetadata")
+                    thisVideo.play();
+                });
+            }
+        }
+
+
+
+
+        // var video = document.querySelector("#video")
+        // var Hls = window.Hls
+        // var url = "http://video.maotuotuo.com:10080/hls/1/1_live.m3u8" 
+
+        // if (Hls.isSupported()) {
+        //     var hls = new Hls();
+        //     hls.loadSource(url)
+        //     hls.attachMedia(video)
+        //     hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        //         console.log("Events.MANIFEST_PARSED")
+        //         video.play();
+        //     });
+        // }
+        // // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+        // // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+        // // This is using the built-in support of the plain video element, without using hls.js.
+        // // Note: it would be more normal to wait on the 'canplay' event below however on Safari (where you are most likely to find built-in HLS support) the video.src URL must be on the user-driven
+        // // white-list before a 'canplay' event will be emitted; the last video event that can be reliably listened-for when the URL is not on the white-list is 'loadedmetadata'.
+        // else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        //     video.src = url;
+        //     video.addEventListener('loadedmetadata', function () {
+        //         console.log("loadedmetadata")
+        //         video.play();
+        //     });
+        // }
+    </script>
+</body>
+
+</html>
