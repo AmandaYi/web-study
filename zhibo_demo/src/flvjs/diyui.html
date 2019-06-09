@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>diyhlsui</title>
+    <script src="./flv.js"></script>
+
+    <style>
+        .player {
+            height: 300px;
+            width: 500px;
+            position: relative;
+        }
+
+        .player video {
+            height: 100%;
+            width: 100%;
+        }
+
+        /* 按钮,进行播放和暂停 */
+        .player .btn {
+            position: absolute;
+            height: 50px;
+            width: 50px;
+            background-color: rgba(235, 212, 3, 0.527);
+            top: 50%;
+            left: 50%;
+            z-index: 50;
+            padding: 10px;
+            margin-left: -30px;
+            margin-top: -30px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .player .btn:hover {
+            background-color: rgba(235, 212, 3, 0.3);
+        }
+
+        .player .btn::before {
+            content: "";
+            display: block;
+            height: 0;
+            width: 0;
+            border: 20px solid #ddd;
+            margin-left: 20px;
+            margin-top: 5px;
+            border-right-color: transparent;
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+
+        }
+
+        .player .play {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="player">
+        <video></video>
+        <div class="btn"></div>
+    </div>
+
+    <script>
+        var flvjs = window.flvjs;
+        var video = document.querySelector("video")
+
+        var url = `http://127.0.0.1:7001/live/movie.flv`
+
+
+        initSrc(video, url)
+
+        function initSrc(thisVideo, url) {
+
+            if (flvjs.isSupported()) {
+                var flvPlayer = flvjs.createPlayer({
+                    type: 'flv',
+                    url: url
+                });
+                flvPlayer.attachMediaElement(video);
+                flvPlayer.load();
+                flvPlayer.play();
+            }
+
+        }
+        var btn = document.querySelector(".btn")
+
+        // 维护video的状态
+        // 处理事件问题
+        btn.addEventListener("click", function () {
+            if (video.paused) {
+                video.play()
+            } else {
+                video.pause()
+            }
+        }, this)
+        video.addEventListener("click", function () {
+            if (video.paused) {
+                video.play()
+            } else {
+                video.pause()
+            }
+        })
+        // 维护整个视频状态,进行处理
+        video.addEventListener("play", function () {
+            console.log("play")
+            // 隐藏按钮
+            btn.className = "btn play"
+        })
+        video.addEventListener("pause", function () {
+            console.log("pause")
+            // 显示按钮
+            btn.className = "btn"
+        })
+    </script>
+</body>
+
+</html>
