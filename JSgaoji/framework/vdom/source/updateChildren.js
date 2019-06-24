@@ -20,3 +20,4 @@ function replaceNode(vnode, newVnode) {
 
     // 替换
 }
+patch(vnode,newvode)

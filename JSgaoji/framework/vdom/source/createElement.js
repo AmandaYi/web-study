@@ -25,3 +25,4 @@ function createElement(vnode) {
     // 返回真实的 DOM 元素
     return elem
 }
+patch(box,newvode)
