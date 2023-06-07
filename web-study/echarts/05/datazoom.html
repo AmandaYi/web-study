@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>datazoom</title>
+    <script src="./../echarts.js"></script>
+</head>
+
+<body>
+    <div style="width:1000px;height:600px;" id="div"></div>
+    <script>
+        (window => {
+            let data = []
+            let xAxisData = []
+            for (let i = 0; i < 10000; i++) {
+                let tmp = parseInt(Math.random() * 100)
+                tmp = tmp > 30 ? tmp = parseInt(Math.random() * 100) : tmp
+                data.push(tmp)
+                xAxisData.push(2015 + i)
+            }
+            let myCharts = echarts.init(document.getElementById("div"))
+            let option = {
+                title: {
+                    text: "意向调查表"
+                },
+                xAxis: {
+                    type: "category",
+                    data: xAxisData,
+                },
+                yAxis: {
+
+                    type: "value"
+                },
+                dataZoom: {
+                    type: "slider",
+                    start: 10,
+                    end: 50
+                },
+                series: [
+                    {
+                        name: "意向",
+                        data: data,
+                        type: "bar"
+                    }
+                ]
+            }
+            myCharts.setOption(option, true)
+        })(window)
+
+    </script>
+</body>
+
+</html>

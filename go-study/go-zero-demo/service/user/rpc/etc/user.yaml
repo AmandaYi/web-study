@@ -1,0 +1,15 @@
+Name: user.rpc
+ListenOn: 127.0.0.1:20000
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: user.rpc
+
+# mysql链接地址，满足 $user:$password@tcp($ip:$port)/$db?$queries 格式即可
+Mysql:
+  DataSource: "book:aaKeNtpWR6LXsd8c@tcp(127.0.0.1:3306)/book?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai"
+
+CacheRedis:
+  - Host: "127.0.0.1:6379"
+    Pass: "123456"
+    Type: node

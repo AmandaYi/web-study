@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaozheyun.mapper.UserMapper">
+    <!-- 注意：-->
+    <!-- 1、查询的标签select必须设置属性resultType或resultMap，用于设置实体类和数据库表的映射-->
+    <!-- 关系-->
+    <!-- resultType：自动映射，用于属性名和表中字段名一致的情况-->
+    <!-- resultMap：自定义映射，用于一对多或多对一或字段名和属性名不一致的情况-->
+    <!-- 2、当查询的数据为多条时，不能使用实体类作为返回值，只能使用集合，否则会抛出异常-->
+    <!-- TooManyResultsException；但是若查询的数据只有一条，可以使用实体类或集合作为返回值-->
+    <!-- $的核心是字符串拼接，因此记得单引号,eg: '${username}'-->
+    <!-- #的核心是字符串替换把?替换，因此无需单引号 #{username}-->
+    <!-- Integer insert();-->
+    <insert id="insert">
+        insert into t_user ( username,password) values ('zhaozheyun','123456')
+    </insert>
+    <!--    insert into t_user (username,password) values ('zhaozheyun2','123456');-->
+    <!--    insert into t_user (username,password) values ('zhaozheyun3','123456');-->
+    <!--    Integer update();-->
+    <update id="update">
+        update t_user set password = 'zhaozheyun' where username = 'zhaozheyun';
+    </update>
+    <!--    Integer delete();-->
+    <delete id="delete">
+        delete from t_user where username = 'zhaozheyun2';
+    </delete>
+    <!--
+         查询功能的标签必须设置resultType或resultMap
+         resultType：设置默认的映射关系
+         resultMap：设置自定义的映射关系
+    -->
+    <!--    User findUserByUsername(String username);-->
+    <select id="findUserByUsername" resultType="User">
+        <!-- 这里的#{username}可以为任意的字符串 -->
+        select * from t_user where username = #{username};
+    </select>
+    <!-- User checkLogin(String username, String password);-->
+    <select id="checkLogin" resultType="User">
+        select * from t_user where username = #{arg0} and password = #{arg1};
+        <!-- 也可以这么用 -->
+        <!-- 原理： 在Mybatis源码中，会把接口函数的参数，如果是2个参数会转换为Map映射，即 [arg0, arg1, param0, param1] -->
+        select * from t_user where username = #{param0} and password = #{arg1}
+    </select>
+
+    <!--  User checkLoginByParam(@Param("username") String username, @Param("password") String password);-->
+    <select id="checkLoginByParam" resultType="User">
+        select * from t_user where username = #{username} and password = #{password};
+    </select>
+
+    <!-- User checkLoginByMap(Map<String, Object> map);-->
+    <select id="checkLoginByMap" resultType="User">
+        select * from t_user where username = #{username} and password = #{password};
+    </select>
+    <!--     User checkLoginByUser(User user);-->
+    <select id="checkLoginByUser" resultType="User">
+        select * from t_user where username = #{username} and password = #{password};
+    </select>
+    <!--    List<User> findUserFullList();-->
+    <select id="findUserFullList" resultType="User">
+        select * from t_user;
+    </select>
+
+
+<!--    模糊查询-->
+</mapper>

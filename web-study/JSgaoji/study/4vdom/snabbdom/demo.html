@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="box"></div>
+    <button id="btn">change</button>
+    <script src="https://cdn.bootcss.com/snabbdom/0.7.0/snabbdom.js"></script>
+    <script src="https://cdn.bootcss.com/snabbdom/0.7.0/snabbdom-class.js"></script>
+    <script src="https://cdn.bootcss.com/snabbdom/0.7.0/snabbdom-props.js"></script>
+    <script src="https://cdn.bootcss.com/snabbdom/0.7.0/snabbdom-style.js"></script>
+    <script src="https://cdn.bootcss.com/snabbdom/0.7.0/snabbdom-eventlisteners.js"></script>
+    <script src="https://cdn.bootcss.com/snabbdom/0.7.0/h.js"></script>
+
+    <script>
+
+
+        (window => {
+
+            var snabbdom = window.snabbdom
+
+            // 初始化patch渲染函数
+            var patch = snabbdom.init([
+                snabbdom_class,
+                snabbdom_props,
+                snabbdom_style,
+                snabbdom_eventlisteners,
+
+            ])
+            var h = snabbdom.h
+            var box = document.getElementById("box")
+            //  生成一个vnode
+            var vnode = h("ul#list", {}, [
+                h("li", {}, "item 1"),
+                h("li", {}, "item 2"),
+            ])
+            // 进行渲染
+            patch(box, vnode)
+
+            // 进行比对更新节点
+            var newNode = h("ul#list", {}, [
+                h("li", {}, "item 1"),
+                h("li", {}, "change item 2"),
+                h("li", {}, "item 3"),
+            ])
+            var btn = document.getElementById("btn")
+            btn.addEventListener("click", () => {
+                // 给vnode打补丁
+                patch(vnode,newNode)
+            })
+        })(window)
+    </script>
+</body>
+
+</html>

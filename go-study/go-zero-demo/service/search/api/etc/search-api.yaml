@@ -1,0 +1,13 @@
+Name: search-api
+Host: 0.0.0.0
+Port: 10001
+
+Auth:
+  AccessSecret: 123456xxsadawhdoiwahdoiwahoidhawji
+  AccessExpire: 36000
+
+UserRpc:
+  Etcd:
+    Hosts:
+    - 127.0.0.1:2379
+    key: user.rpc

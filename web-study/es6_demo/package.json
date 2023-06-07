@@ -1,0 +1,21 @@
+{
+  "name": "es6_demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build":"babel .\\src\\index01.js -o .\\dist\\index01.js",
+    
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  },
+  "dependencies": {
+    "babel-preset-env": "^1.7.0"
+  }
+}
+

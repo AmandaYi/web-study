@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+	<head>
+  	<meta charset="utf-8">
+    <title>每天一个JavaScript实例-处理textarea中的字符成每一行</title>
+    <script>
+    	
+			function clicka(){
+				console.log("aaa");
+				var aa = document.getElementById("text");
+				var lines = aa.value.split("\n");
+        console.log("lines",lines)
+				var bbb = document.getElementById("result");
+				var string = "";
+				for(i=0;i<lines.length;i++){
+					string+= lines[i]+"<br />";////</br>  和<br /> 应该用 <br />
+				}
+				bbb.innerHTML=string
+				}
+			
+    </script>
+   </head>
+
+	<body>		
+    <textarea id="text" placeholder="请输入多行文字"></textarea>
+    <div id = "result"></div>				
+    <a href="javascript:void(0);" onClick="clicka()">处理换行</a>											 
+	</body>
+	</html>

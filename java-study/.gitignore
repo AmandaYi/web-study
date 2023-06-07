@@ -1,0 +1,5 @@
+/**/out/
+/**/target/
+/**/j2ee/tomcat/logs/
+/**/j2ee/project/servlet/web/WEB-INF/classes/
+/**/j2ee/project/j2ee/web/WEB-INF/classes/

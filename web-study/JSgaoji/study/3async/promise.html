@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        (window => {
+            // var src = "https://q1.qlogo.cn/g?b=qq&s=100&nk=891177434"
+            // function loadImg(src) {
+            //     var img = document.createElement("img")
+            //     img.addEventListener("load", (res) => {
+            //         console.log(res)
+            //     })
+            //     img.addEventListener("error", (err) => {
+            //         console.log(res)
+            //     })
+            //     img.src = src
+            // }
+            // loadImg(src)
+
+            var src = "https://q1.qlogo.cn/g?b=qq&s=100&nk=891177434"
+            function loadImg(src) {
+                var img = document.createElement("img")
+                img.src = src
+                return new Promise((resolve, reject) => {
+                    img.addEventListener("load", (res) => {
+                        resolve(res)
+                    })
+                    img.addEventListener("error", (err) => {
+                        reject(err)
+                    })
+                })
+            }
+            var result = loadImg(src)
+
+            // result.then(res => {
+            //     console.log(res)
+            //     return result // 这里返回是为了让紧接着的then进行调用,那么如果返回的是另一个promise对象的话,刚好形成了串联
+            // }).then(res => {
+            //     console.log(res)
+            // })
+            // result.catch(err => {
+            //     console.log(err)
+            //     return result// 这里返回是为了让紧接着的catch进行调用
+            // })
+            //     .catch(err => console.log(err))
+            // var src2 = "https://sqimg.qq.com/qq_product_operations/im/qqlogo/imlogo_b.png"
+            // var result2 = loadImg(src2)
+            // result.then(res => {
+            //     console.log("第一张图片")
+            //     return result2  // 这里返回的是第二个promise对象,但是一定是先把result的全部then执行完毕,才会执行第二个
+            // }).then(res => {
+            //     console.log("第二张图片")
+            // })
+
+            // var src = "https://q1.qlogo.cn/g?b=qq&s=100&nk=891177434"
+            // function loadImg(src) {
+            //     var img = document.createElement("img")
+            //     img.src = src
+            //     return new Promise((resolve, reject) => {
+            //         img.addEventListener("load", (res) => {
+            //             resolve(res)
+            //         })
+            //         img.addEventListener("error", (err) => {
+            //             reject(err)
+            //         })
+            //     })
+            // }
+            // var result = loadImg(src)
+            // var src2 = "https://sqimg.qq.com/qq_product_operations/im/qqlogo/imlogo_b.png"
+            // var result2 = loadImg(src2)
+            // // Promise.all 接受一个promise对象数组
+            // // 当全部的执行完毕之后,才开始执行then函数,data是一个数组,依次包含了每一个promise对象的返回值
+            // Promise.all([result, result2])
+            //     .then(data => { console.log(data) }) // [Event, Event]
+            //     .catch(err => { console.log(err) })
+            // // Promise.race 接受一个promise对象数组
+            // // 当只要有一个执行完毕了,就执行函数,data返回最先执行完成的值
+            // Promise.race([result, result2])
+            //     .then(data => {
+            //         console.log(data)
+            //     })
+            //     .catch(err => {
+            //         console.log(err)
+            //     })
+            // // Promise.all 和 Promise.race 同时执行的话,竞赛先执行
+
+
+            var src = "https://q1.qlogo.cn/g?b=qq&s=100&nk=891177434"
+            function loadImg(src) {
+                var img = document.createElement("img")
+                img.src = src
+                return new Promise((resolve, reject) => {
+                    img.addEventListener("load", (res) => {
+                        resolve(res)
+                    })
+                    img.addEventListener("error", (err) => {
+                        reject(err)
+                    })
+                })
+            }
+
+            async function load() {
+                const result1 = await loadImg(src)
+                console.log(result1)
+                return result // 这里的返回值是方便调用的时候用then来获取
+            }
+            load()
+            .then(res=>{
+                console.log(res)
+            })
+            .catch(err=>{console.log(err)})
+        })(window)
+    </script>
+</body>
+
+</html>

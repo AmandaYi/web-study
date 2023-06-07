@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>01实现vue双向数据绑定</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" id="ipt" />
+        <p type="text" id="desc"></p>
+    </div>
+    <script>
+        var data = {
+            text: "",
+        }
+        window.onload = function () {
+            Object.defineProperty(data, "text", {
+                get: function () {
+                    return data
+                },
+                set: function (newValue = "") {
+                    document.getElementById("ipt").value = newValue;
+                    document.getElementById("desc").innerHTML = newValue;
+                }
+            })
+            document.getElementById("ipt").addEventListener("keyup", function (e) {
+                data.text = e.target.value
+            })
+        }
+    </script>
+</body>
+
+</html>
