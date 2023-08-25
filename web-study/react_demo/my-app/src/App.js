@@ -3,6 +3,28 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  state = {
+    count: 0
+  }
+  componentDidMount() {
+    this.setState({ count: this.state.count + 1 })
+    console.log(this.state.count)
+    this.setState({ count: this.state.count + 1 })
+    console.log(this.state.count)
+
+    this.setState(prevState => ({ count: this.state.count + 1 }), () => {
+      console.log(this.state.count)
+    }) 
+
+    setTimeout(() => {
+      this.setState({ count: this.state.count + 1 })
+      console.log(this.state.count)
+    }, 0)
+    setTimeout(() => {
+      this.setState({ count: this.state.count + 1 })
+      console.log(this.state.count)
+    }, 0)
+  }
   render() {
     return (
       <div className="App">
@@ -19,6 +41,7 @@ class App extends Component {
           >
             Learn React
           </a>
+          <p>count:{this.state.count}</p>
         </header>
       </div>
     );
