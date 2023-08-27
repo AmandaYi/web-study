@@ -6,7 +6,8 @@
   <!-- <ListDemo></ListDemo> -->
   <!-- <EventDemo></EventDemo> -->
   <!-- <FormDemo></FormDemo> -->
-  <ComponentsDemo></ComponentsDemo>
+  <!-- <ComponentsDemo></ComponentsDemo> -->
+  <AdvancedDemo></AdvancedDemo>
 </template>
 
 <script>
@@ -18,6 +19,7 @@ import EventDemo from './components/BaseUse/EventDemo.vue';
 import ListDemo from './components/BaseUse/ListDemo.vue';
 import FormDemo from './components/BaseUse/FormDemo.vue';
 import ComponentsDemo from "./components/ComponentsDemo/index.vue"
+import AdvancedDemo from "./components/AdvancedDemo/index.vue"
 export default {
   name: 'App',
   components: {
@@ -28,7 +30,8 @@ export default {
     ListDemo,
     EventDemo,
     FormDemo,
-    ComponentsDemo
+    ComponentsDemo,
+    AdvancedDemo
   }
 }
 </script>
