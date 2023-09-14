@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vnode-demo</title>
+</head>
+<body>
+    <div id="content">
+        <input type="text" v-model="name">
+        <span>说明</span>
+        <button @click="save">save</button>
+    </div>
+
+    <script>
+        let vnode = {
+            tag:"div",
+            attrs:{
+                id:"content"
+            },
+            children:[
+                {
+                    tag: "input",
+                    attrs:{
+                        type:"text",
+                        value: name
+                    },
+                    on:{
+                        input: ($event)=> name = $event.target.value
+                    },
+                    children: [],
+                    textNode:""
+                },
+                {
+                    tag:"span",
+                    textNode:"说明"    
+                },
+                {
+                    tag:"button",
+                    on:{
+                        click:save
+                    },
+                    children:[],
+                    textNode:"save"
+                }
+            ]
+        }
+    </script>
+</body>
+</html>
