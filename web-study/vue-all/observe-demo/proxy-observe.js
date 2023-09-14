@@ -17,6 +17,12 @@ function reactive(target = {}) {
             if (target[key] === value) {
                 return true
             }
+            const ownKeys = Reflect.ownKeys(target)
+            if (ownKeys.includes(key)) {
+                console.log("已有key的设置set")
+            }else{
+                console.log("新增的key的设置")
+            }
             const result = Reflect.set(target, key, value, receiver)
             console.log("更新视图")
             return result
