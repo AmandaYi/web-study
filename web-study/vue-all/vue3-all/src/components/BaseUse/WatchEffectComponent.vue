@@ -3,11 +3,12 @@
     <p>{{ info.name }}</p>
 </template>
 <script>
-import { reactive, watchEffect } from 'vue';
+import { onBeforeUnmount, onMounted, reactive, watchEffect } from 'vue';
 
 export default {
     name: "WatchEffectComponent",
     setup() {
+        let timer = null
         let info = reactive({
             name: "小明"
         })
@@ -18,12 +19,16 @@ export default {
                 count++
                 return false
             }
-
             console.log(info.name)
         })
-        setTimeout(() => {
-            info.name = "小张"
-        }, 1500)
+        onMounted(() => {
+            timer = setTimeout(() => {
+                info.name = "小张"
+            }, 1500)
+        })
+        onBeforeUnmount(() => {
+            clearTimeout(timer)
+        })
         return {
             info
         }
