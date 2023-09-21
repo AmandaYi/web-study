@@ -6,8 +6,13 @@ export default class FormDemo extends React.Component {
             name: "",
             content: "",
             sourceLevel: "A",
-            date: ""
+            date: "",
+            searchName:""
         }
+
+        this.searchNameRef = React.createRef()
+        this.fileInputRef = React.createRef()
+ 
     }
     onChangeName = (event) => {
         this.setState({
@@ -56,6 +61,15 @@ export default class FormDemo extends React.Component {
                     世界
                     <input type="radio" />
                 </p>
+                <div>
+                    非受控组件文本搜索
+                    <input type="text" defaultChecked={this.state.searchName} ref={this.searchNameRef} />
+                    <p onClick={ () =>console.log( this.searchNameRef.current.value)}>获取搜索值</p>
+                </div>
+                <div>非受控组件文件上传
+                    <input type="file" ref={this.fileInputRef} />
+                    <p onClick={()=>console.log( this.fileInputRef.current.value)}>获取文件信息</p>
+                </div>
             </form>
         </>)
     }
