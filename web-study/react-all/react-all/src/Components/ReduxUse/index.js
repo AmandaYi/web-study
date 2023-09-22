@@ -1,1 +1,3 @@
-import {createStore} from "redux"
+import {StoreCreator} from "@reduxjs/toolkit"
+
+let store = createStore()
