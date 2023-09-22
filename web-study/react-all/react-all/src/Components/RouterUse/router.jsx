@@ -1,18 +1,20 @@
-import React from "react"
+import React, { Suspense } from "react"
 import { HashRouter as Router, Switch, Route } from "react-router-dom"
 import List from "./List"
-import Detail from "./detail"
+const Detail = React.lazy(() => import("./detail"))
 function RouterComponent() {
     return (
         <Router>
-            <Switch>
-                <Route exact path="/">
-                    <List />
-                </Route>
-                <Route path="/detail/:id">
-                    <Detail />
-                </Route>
-            </Switch>
+            <Suspense fallback={"Loading"}>
+                <Switch>
+                    <Route exact path="/">
+                        <List />
+                    </Route>
+                    <Route path="/detail/:id">
+                        <Detail />
+                    </Route>
+                </Switch>
+            </Suspense>
         </Router>
     )
 }
