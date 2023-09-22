@@ -52,6 +52,27 @@ export default class PropsDemo extends React.Component {
         return (<>
             <Input onAdd={this.onAdd}></Input>
             <List todoList={this.state.todoList}></List>
+            <Footer></Footer>
         </>)
+    }
+}
+// 验证SCU
+class Footer extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            text: "footer"
+        }
+    }
+    shouldComponentUpdate = (nextProps, nextState) => {
+        if (nextState.text !== this.state.text) {
+            return true
+        } else {
+            return false
+        }
+    }
+    render = () => {
+        console.log("footer 渲染")
+        return (<>{this.state.text}</>)
     }
 }
