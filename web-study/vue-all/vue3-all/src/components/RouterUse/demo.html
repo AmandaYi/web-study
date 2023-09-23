@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Router</title>
+</head>
+
+<body>
+    <p>
+        <a href="#/list">#/List</a>
+        <a href="#/detail/1">#/detail/1</a>
+    </p>
+    <p>
+        <span id="pushBtn">前进</span>
+    </p>
+    <script>
+        // hash
+        function onHashChange(e) {
+            console.log(e)
+        }
+        window.addEventListener("hashchange", onHashChange)
+
+        let pushBtn = document.getElementById("pushBtn")
+        pushBtn.addEventListener("click", () => {
+            const state = { name: "page1" }
+            console.log("切换路由")
+            history.pushState(state, "", "page1")
+        })
+        window.addEventListener("popstate", (event) => {
+            console.log("popstate event", event)
+        })
+    </script>
+</body>
+
+</html>

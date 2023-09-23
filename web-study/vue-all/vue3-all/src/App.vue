@@ -12,7 +12,8 @@
   <!-- <MousePosition></MousePosition> -->
   <!-- <WatchComponent></WatchComponent> -->
   <!-- <WatchEffectComponent/> -->
-  <HOCFactory></HOCFactory>
+  <!-- <HOCFactory></HOCFactory> -->
+  <RouterDemo></RouterDemo>
 </template>
 
 <script>
@@ -31,6 +32,8 @@ import MousePosition from "./components/MousePosition/index.vue"
 import WatchComponent from "./components/BaseUse/WatchComponent.vue";
 import WatchEffectComponent from "./components/BaseUse/WatchEffectComponent.vue"
 import HOCFactory from "./components/BaseUse/HOCFactory"
+import RouterDemo from "./components/RouterUse/index.vue"
+
 export default {
   name: 'App',
   components: {
@@ -47,7 +50,8 @@ export default {
     SuspenseDemo,
     MousePosition,
     WatchComponent,
-    HOCFactory
+    HOCFactory,
+    RouterDemo
 }
 }
 </script>
