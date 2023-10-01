@@ -9,5 +9,10 @@ const router = createRouter({
         { path: "/detail", component: Detail, name: "detail" }
     ]
 })
+const routes = [
+    {
+        path: "/list"
+    }
+]
 
 export default router
