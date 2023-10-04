@@ -4,6 +4,7 @@ import UseRefDemo from "./UseRefDemo";
 import UseContextDemo from "./UseContextDemo";
 import UseReducerDemo from "./UseReducerDemo";
 import UseMemoDemo from "./UseMemoDemo";
+import UseCallbackDemo from "./UseCallbackDemo";
 export default class IndexHooksDemo extends React.Component {
     constructor(props) {
         super(props)
@@ -21,7 +22,8 @@ export default class IndexHooksDemo extends React.Component {
                 {/* <UseRefDemo/> */}
                 {/* <UseContextDemo/> */}
                 {/* <UseReducerDemo/> */}
-                <UseMemoDemo/>
+                {/* <UseMemoDemo/> */}
+                <UseCallbackDemo/>
             </>
         )
     }
