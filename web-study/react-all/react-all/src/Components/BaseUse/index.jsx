@@ -15,8 +15,8 @@ export default function () {
             {/* <ListDemo></ListDemo> */}
             {/* <EventDemo></EventDemo> */}
             {/* <FormDemo></FormDemo> */}
-            <PropsDemo></PropsDemo>
-            {/* <SetState></SetState> */}
+            {/* <PropsDemo></PropsDemo> */}
+            <SetState></SetState>
             {/* <PortalsDemo></PortalsDemo> */}
         </>
     )

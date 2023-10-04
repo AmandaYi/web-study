@@ -7,25 +7,27 @@ export default class SetState extends React.Component {
             count: 0
         }
     }
-    // componentDidMount = () => {
-    //     this.setState({ count: this.state.count + 1 })
-    //     console.log(this.state.count)
-    //     this.setState({ count: this.state.count + 1 })
-    //     console.log(this.state.count)
+    componentDidMount = () => {
+        this.setState({ count: this.state.count + 1 })
+        console.log(this.state.count) // 0
+        this.setState({ count: this.state.count + 1 })
+        console.log(this.state.count) // 0
 
-    //     this.setState(prevState => ({ count: this.state.count + 1 }), () => {
-    //         console.log(this.state.count)
-    //     })
+        this.setState(prevState => ({ count: this.state.count + 1 }), () => {
+            console.log(this.state.count) // 1 
+        })
 
-    //     setTimeout(() => {
-    //         this.setState({ count: this.state.count + 1 })
-    //         console.log(this.state.count)
-    //     }, 0)
-    //     setTimeout(() => {
-    //         this.setState({ count: this.state.count + 1 })
-    //         console.log(this.state.count)
-    //     }, 0)
-    // }
+        setTimeout(() => {
+            this.setState({ count: this.state.count + 1 })
+            console.log(this.state.count) // 2
+        }, 0)
+        setTimeout(() => {
+            this.setState({ count: this.state.count + 1 })
+            console.log(this.state.count) // 3
+        }, 0)
+
+        window.addEventListener("click", this.listenerIncrease)
+    }
 
     increase = () => {
         // 传入对象，会被合并，执行结果只有一次，也就是+1
@@ -59,9 +61,6 @@ export default class SetState extends React.Component {
             count: this.state.count + 1
         })
         console.log(this.state.count)
-    }
-    componentDidMount = () => {
-        window.addEventListener("click", this.listenerIncrease)
     }
     render = () => {
         // return (<p>count:{this.state.count}</p>)
