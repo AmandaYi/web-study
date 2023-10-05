@@ -5,6 +5,8 @@ import UseContextDemo from "./UseContextDemo";
 import UseReducerDemo from "./UseReducerDemo";
 import UseMemoDemo from "./UseMemoDemo";
 import UseCallbackDemo from "./UseCallbackDemo";
+import CustomHookDemo from "./CustomHookDemo";
+import UseEffectWithUseState from "./UseEffectWithUseState"
 export default class IndexHooksDemo extends React.Component {
     constructor(props) {
         super(props)
@@ -23,7 +25,9 @@ export default class IndexHooksDemo extends React.Component {
                 {/* <UseContextDemo/> */}
                 {/* <UseReducerDemo/> */}
                 {/* <UseMemoDemo/> */}
-                <UseCallbackDemo/>
+                {/* <UseCallbackDemo/> */}
+                {/* <CustomHookDemo /> */}
+                <UseEffectWithUseState/>
             </>
         )
     }
