@@ -1,11 +1,9 @@
 import React from "react";
-// import SetStateDemo from "./SetStateDemo";
-import LifeCycleDemo from "./LifeCycleDemo";
+import SetStateDemo from "./SetStateDemo";
 export default class IndexBaseUse extends React.Component {
     render = () => {
         return (
-            // <SetStateDemo></SetStateDemo>
-            <LifeCycleDemo></LifeCycleDemo>
+            <SetStateDemo></SetStateDemo>
         )
     }
 }
